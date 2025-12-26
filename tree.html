@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🎄 圣诞快乐！</title>
+  <style>
+    :root{
+      --bg1:#050914;
+      --bg2:#0b1b2a;
+      --gold:#ffd36b;
+      --text:#eaf2ff;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "PingFang SC","Microsoft YaHei",sans-serif;
+      color:var(--text);
+      background: radial-gradient(1200px 800px at 50% 25%, #123 0%, var(--bg2) 35%, var(--bg1) 75%);
+      overflow:hidden;
+    }
+    .wrap{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      position:relative;
+    }
+    .card{
+      width:min(520px, 96vw);
+      border-radius:22px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.45);
+      backdrop-filter: blur(10px);
+      padding:18px 18px 14px;
+      position:relative;
+    }
+    h1{
+      font-size:18px;
+      margin:0 0 8px 0;
+      letter-spacing:.5px;
+      text-align:center;
+      color:#fff;
+    }
+    .sub{
+      text-align:center;
+      margin:0 0 14px 0;
+      opacity:.9;
+      font-size:13px;
+    }
+
+    /* tree area */
+    .scene{
+      height:460px;
+      border-radius:18px;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      background: radial-gradient(700px 520px at 50% 35%, rgba(90,160,255,.18), rgba(0,0,0,0) 60%);
+    }
+
+    /* ground */
+    .ground{
+      position:absolute;
+      bottom:0;
+      width:100%;
+      height:120px;
+      background: radial-gradient(520px 130px at 50% 20%, rgba(255,255,255,0.16), rgba(255,255,255,0.03) 55%, rgba(0,0,0,0) 70%);
+      filter: blur(.2px);
+    }
+
+    /* tree body (triangles stacked) */
+    .tree{
+      width:260px;
+      height:360px;
+      position:relative;
+      transform: translateY(8px);
+    }
+    .layer{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      width:0;height:0;
+      border-left: 140px solid transparent;
+      border-right:140px solid transparent;
+      border-bottom: 160px solid #0f6a3b;
+      filter: drop-shadow(0 14px 18px rgba(0,0,0,.35));
+    }
+    .layer.l1{top:0; border-left-width:100px;border-right-width:100px;border-bottom-width:120px; border-bottom-color:#118045;}
+    .layer.l2{top:72px; border-left-width:125px;border-right-width:125px;border-bottom-width:145px; border-bottom-color:#0f743f;}
+    .layer.l3{top:150px; border-left-width:150px;border-right-width:150px;border-bottom-width:170px; border-bottom-color:#0d6638;}
+
+    .trunk{
+      position:absolute;
+      left:50%;
+      bottom:8px;
+      transform:translateX(-50%);
+      width:58px;height:70px;
+      border-radius:10px;
+      background: linear-gradient(#6b3c1f,#4c2814);
+      box-shadow: 0 10px 18px rgba(0,0,0,.35);
+    }
+
+    /* star */
+    .star{
+      position:absolute;
+      top:-22px;
+      left:50%;
+      transform:translateX(-50%);
+      width:34px;height:34px;
+      background: conic-gradient(from 0deg, #fff 0 10%, var(--gold) 10% 40%, #fff 40% 50%, var(--gold) 50% 90%, #fff 90% 100%);
+      clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+      filter: drop-shadow(0 0 14px rgba(255,211,107,.8));
+      animation: twinkle 1.8s ease-in-out infinite;
+    }
+    @keyframes twinkle{
+      0%,100%{transform:translateX(-50%) scale(1); opacity: .95;}
+      50%{transform:translateX(-50%) scale(1.12); opacity:1;}
+    }
+
+    /* lights */
+    .light{
+      position:absolute;
+      width:10px;height:10px;
+      border-radius:50%;
+      box-shadow: 0 0 14px currentColor;
+      opacity:.95;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink{
+      0%,100%{filter:brightness(1); transform:scale(1);}
+      50%{filter:brightness(1.8); transform:scale(1.18);}
+    }
+
+    /* garland */
+    .garland{
+      position:absolute;
+      left:50%;
+      top:78px;
+      width:240px;
+      height:140px;
+      transform:translateX(-50%) rotate(-2deg);
+      border: 3px solid rgba(255,255,255,.15);
+      border-color: rgba(255,255,255,.0) rgba(255,255,255,.0) rgba(255,255,255,.18) rgba(255,255,255,.0);
+      border-radius: 0 0 240px 240px;
+      filter: drop-shadow(0 8px 10px rgba(0,0,0,.25));
+    }
+    .garland.g2{top:152px;width:280px;height:170px;transform:translateX(-50%) rotate(2deg);opacity:.9}
+    .garland.g3{top:228px;width:310px;height:190px;transform:translateX(-50%) rotate(-1deg);opacity:.8}
+
+    /* controls */
+    .controls{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      margin-top:12px;
+      flex-wrap:wrap;
+    }
+    button{
+      appearance:none;
+      border:none;
+      border-radius:12px;
+      padding:10px 12px;
+      font-size:13px;
+      cursor:pointer;
+      color:#0a1020;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 10px 20px rgba(0,0,0,.25);
+    }
+    button:active{transform:translateY(1px)}
+    .hint{
+      text-align:center;
+      opacity:.85;
+      font-size:12px;
+      margin-top:8px;
+    }
+
+    /* snow */
+    canvas{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+
+    /* footer */
+    .footer{
+      margin-top:10px;
+      font-size:12px;
+      text-align:center;
+      opacity:.85;
+    }
+    .name{
+      color:#fff;
+      font-weight:700;
+      letter-spacing:.3px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <canvas id="snow"></canvas>
+
+    <div class="card">
+      <h1>🎁 给你的一棵电子圣诞树</h1>
+      <p class="sub">点一下按钮，换一套灯光 ✨</p>
+
+      <div class="scene" id="scene">
+        <div class="tree" id="tree">
+          <div class="star"></div>
+
+          <div class="layer l1"></div>
+          <div class="layer l2"></div>
+          <div class="layer l3"></div>
+
+          <div class="garland g1"></div>
+          <div class="garland g2"></div>
+          <div class="garland g3"></div>
+
+          <div class="trunk"></div>
+        </div>
+        <div class="ground"></div>
+      </div>
+
+      <div class="controls">
+        <button id="toggle">切换灯光主题</button>
+        <button id="message">写一句祝福</button>
+      </div>
+      <div class="hint">提示：在微信里打开也能看～</div>
+      <div class="footer">Made with 🎄 by <span class="name" id="fromName">你</span></div>
+    </div>
+  </div>
+
+  <script>
+    // ====== lights ======
+    const themes = [
+      ["#ff4d6d","#ffd166","#06d6a0","#4dabf7","#b197fc"],
+      ["#ff922b","#ffe066","#63e6be","#74c0fc","#ffa8a8"],
+      ["#ff6b6b","#51cf66","#339af0","#fcc419","#9775fa"],
+      ["#ffd36b","#e599f7","#63e6be","#74c0fc","#ff8787"],
+    ];
+    let themeIndex = 0;
+
+    const tree = document.getElementById("tree");
+
+    function makeLights(){
+      tree.querySelectorAll(".light").forEach(n=>n.remove());
+
+      const coords = [
+        // around layers
+        {x:50,y:78},{x:70,y:96},{x:30,y:96},
+        {x:22,y:140},{x:78,y:140},{x:50,y:150},
+        {x:18,y:200},{x:82,y:200},{x:50,y:210},
+        {x:12,y:260},{x:88,y:260},{x:50,y:275},
+        {x:24,y:305},{x:76,y:305},{x:50,y:320},
+      ];
+
+      const colors = themes[themeIndex % themes.length];
+      coords.forEach((p,i)=>{
+        const d = document.createElement("div");
+        d.className = "light";
+        d.style.left = `calc(${p.x}% - 5px)`;
+        d.style.top  = `${p.y}px`;
+        d.style.color = colors[i % colors.length];
+        d.style.animationDelay = `${(i*0.12).toFixed(2)}s`;
+        tree.appendChild(d);
+      });
+    }
+
+    makeLights();
+
+    document.getElementById("toggle").addEventListener("click", ()=>{
+      themeIndex++;
+      makeLights();
+    });
+
+    document.getElementById("message").addEventListener("click", ()=>{
+      const msg = prompt("写一句给TA的圣诞祝福（会显示在标题里）：", "圣诞快乐！愿你每天都开心 ✨");
+      if(msg && msg.trim()){
+        document.querySelector("h1").textContent = "🎁 " + msg.trim();
+      }
+      const from = prompt("署名（显示在底部）：", document.getElementById("fromName").textContent);
+      if(from && from.trim()){
+        document.getElementById("fromName").textContent = from.trim();
+      }
+    });
+
+    // ====== snow canvas ======
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+    let W,H,flakes;
+
+    function resize(){
+      W = canvas.width = window.innerWidth * devicePixelRatio;
+      H = canvas.height = window.innerHeight * devicePixelRatio;
+      ctx.scale(devicePixelRatio, devicePixelRatio);
+      flakes = Array.from({length: 120}, ()=>({
+        x: Math.random()*window.innerWidth,
+        y: Math.random()*window.innerHeight,
+        r: 1 + Math.random()*2.2,
+        v: 0.6 + Math.random()*1.8,
+        d: Math.random()*Math.PI*2
+      }));
+    }
+    // reset scale safely on resize
+    function hardResize(){
+      ctx.setTransform(1,0,0,1,0,0);
+      resize();
+    }
+    hardResize();
+    window.addEventListener("resize", hardResize);
+
+    function tick(){
+      ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+      ctx.globalAlpha = 0.9;
+      ctx.fillStyle = "white";
+
+      for(const f of flakes){
+        f.d += 0.01;
+        f.y += f.v;
+        f.x += Math.sin(f.d)*0.5;
+
+        if(f.y > window.innerHeight + 10){
+          f.y = -10; f.x = Math.random()*window.innerWidth;
+        }
+        if(f.x < -10) f.x = window.innerWidth + 10;
+        if(f.x > window.innerWidth + 10) f.x = -10;
+
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    tick();
+
+    // ====== allow query params for message ======
+    // e.g. ?to=Eric&msg=圣诞快乐&from=Rui
+    const params = new URLSearchParams(location.search);
+    const msg = params.get("msg");
+    const from = params.get("from");
+    const to = params.get("to");
+    if(msg) document.querySelector("h1").textContent = "🎁 " + decodeURIComponent(msg);
+    if(from) document.getElementById("fromName").textContent = decodeURIComponent(from);
+    if(to){
+      document.querySelector(".sub").textContent = "送给 " + decodeURIComponent(to) + " 的小惊喜 🎅";
+    }
+  </script>
+</body>
+</html>
